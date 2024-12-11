@@ -21,7 +21,7 @@ python main.py --search "name:Apple"
 python main.py --search "name:Apple" "category:Fruit"
 
 
-GENERATION DE RAPPORT
+GENERATION DE RAPPORT /n
 python main.py --report
 
 
