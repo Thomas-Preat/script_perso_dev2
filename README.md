@@ -4,33 +4,33 @@ Ouvrir le terminal dans le dossier racine.
 
 Utiliser les commandes :
 
-AJOUT DE FICHIER CSV
-python main.py --import_files <file_name.csv>
+AJOUT DE FICHIER CSV<br />
+python main.py --import_files <file_name.csv><br />
 
 
-VOIR L'INVENTAIRE
-python main.py --view
+VOIR L'INVENTAIRE<br />
+python main.py --view<br />
 
 
-RECHERCHER DES ARTICLES
-python main.py --search <"column:criteria">
-python main.py --search <"column:criteria"> <"column:criteria">
+RECHERCHER DES ARTICLES<br />
+python main.py --search <"column:criteria"><br />
+python main.py --search <"column:criteria"> <"column:criteria"><br />
 
-ex:
-python main.py --search "name:Apple"
-python main.py --search "name:Apple" "category:Fruit"
+ex:<br />
+python main.py --search "name:Apple"<br />
+python main.py --search "name:Apple" "category:Fruit"<br />
 
 
 GENERATION DE RAPPORT <br />
 python main.py --report
 
 
-SUPPRIMER UN ARTICLE
-python main.py --delete <ID>
+SUPPRIMER UN ARTICLE<br />
+python main.py --delete <ID><br />
 
 
-AJOUTER UN ARTICLE
-python main.py --add_product <"Name Quantity Price Category">
+AJOUTER UN ARTICLE<br />
+python main.py --add_product <"Name Quantity Price Category"><br />
 
-ex:
-python main.py --add_product "Apple 10 1.2 Fruit"
+ex:<br />
+python main.py --add_product "Apple 10 1.2 Fruit"<br />
