@@ -1,3 +1,5 @@
+https://youtu.be/gvb7ZT7dXh8
+
 Simplement telecharger le fichier zip directement du repo.
 
 Ouvrir le terminal dans le dossier racine.
