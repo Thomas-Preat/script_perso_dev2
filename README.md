@@ -30,7 +30,7 @@ python main.py --delete <ID><br />
 
 
 *AJOUTER UN ARTICLE*<br />
-python main.py --add_product <"Name Quantity Price Category"><br />
+python main.py --add_product <"Name" Quantity Price "Category"><br />
 
 ex:<br />
-python main.py --add_product "Apple 10 1.2 Fruit"<br />
+python main.py --add_product "Apple" 10 1.2 "Fruit"<br />
