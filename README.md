@@ -26,7 +26,7 @@ python main.py --report
 
 
 *SUPPRIMER UN ARTICLE*<br />
-python main.py --delete <ID><br />
+python main.py --delete ID<br />
 
 
 *AJOUTER UN ARTICLE*<br />
