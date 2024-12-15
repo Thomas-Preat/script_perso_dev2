@@ -5,46 +5,62 @@ from app.search import search_products
 from app.report import generate_summary_report
 
 def main():
-    parser = argparse.ArgumentParser(description="Système de gestion d'inventaire")
-    parser.add_argument("--import_files", nargs="+", help="Importer des fichiers CSV (liste des chemins)")
-    parser.add_argument("--search", nargs="+", help="Rechercher des produits (nom, catégorie, etc.)")
-    parser.add_argument("--report", help="Générer un rapport récapitulatif", action="store_true")
-    parser.add_argument("--view", help="Afficher toutes les données", action="store_true")
-    parser.add_argument("--delete", type=int, help="Supprime un article par son ID.")
-    parser.add_argument("--add_product", nargs=4, metavar=("NAME", "QUANTITY", "PRICE", "CATEGORY"),
-                        help="Ajouter un produit dans la base de données.")
-
-    args = parser.parse_args()
-
+    print("Bienvenue dans le système de gestion d'inventaire")
     db_conn = initialize_database()
 
-    if args.import_files:
-        import_csv_files(args.import_files, db_conn)
-    elif args.search:
-        search_products(db_conn, args.search)
-    elif args.report:
-        generate_summary_report(db_conn, "summary_report.csv")
-    elif args.view:
-        display_all_data(db_conn)
-    elif args.delete:
-        from app.database import delete_item_by_id
-        rows_deleted = delete_item_by_id(db_conn, args.delete)
-        if rows_deleted > 0:
-            print(f"L'article avec l'ID {args.delete} a été supprimé.")
+    while True:
+        print("\nQue voulez-vous faire ?")
+        print("1 : Importer un ou plusieurs fichiers CSV")
+        print("2 : Rechercher des produits")
+        print("3 : Générer un rapport récapitulatif")
+        print("4 : Afficher toutes les données")
+        print("5 : Supprimer un article par ID")
+        print("6 : Ajouter un produit")
+        print("7 : Quitter le programme")
+        choice = input("\nEntrez le numéro de votre choix : ")
+
+        if choice == "1":
+            file_paths = input("Entrez les chemins des fichiers CSV à importer (séparés par des espaces) : ").split()
+            if file_paths:
+                import_csv_files(file_paths, db_conn)
+        elif choice == "2":
+            search_criteria = input("Entrez vos critères de recherche (ex. name:Apple category:Fruit) : ").split()
+            if search_criteria:
+                search_products(db_conn, search_criteria)
+        elif choice == "3":
+            generate_summary_report(db_conn, "summary_report.csv")
+            print("Rapport récapitulatif généré : summary_report.csv")
+        elif choice == "4":
+            display_all_data(db_conn)
+        elif choice == "5":
+            try:
+                item_id = int(input("Entrez l'ID de l'article à supprimer : "))
+                rows_deleted = delete_item_by_id(db_conn, item_id)
+                if rows_deleted > 0:
+                    print(f"L'article avec l'ID {item_id} a été supprimé.")
+                else:
+                    print(f"Aucun article trouvé avec l'ID {item_id}.")
+            except ValueError:
+                print("Erreur : L'ID doit être un entier.")
+        elif choice == "6":
+            name = input("Entrez le nom du produit : ")
+            try:
+                quantity = int(input("Entrez la quantité : "))
+                price = float(input("Entrez le prix : "))
+                category = input("Entrez la catégorie : ")
+                add_product(db_conn, name, quantity, price, category)
+                print(f"Produit ajouté : {name}, quantité : {quantity}, prix : {price}, catégorie : {category}")
+            except ValueError:
+                print("Erreur : La quantité doit être un entier et le prix un nombre décimal.")
+        elif choice == "7":
+            print("Merci d'avoir utilisé le système de gestion d'inventaire. Au revoir !")
+            break
         else:
-            print(f"Aucun article trouvé avec l'ID {args.delete}.")
-    elif args.add_product:
-        name, quantity, price, category = args.add_product
-        try:
-            add_product(db_conn, name, int(quantity), float(price), category)
-            print(f"Produit ajouté : {name}, quantité : {quantity}, prix : {price}, catégorie : {category}")
-        except ValueError:
-            print("Erreur : Assurez-vous que la quantité est un entier et que le prix est un nombre décimal.")
-    else:
-        parser.print_help()
+            print("Choix invalide. Veuillez entrer un numéro entre 1 et 7.")
 
     db_conn.close()
 
 if __name__ == "__main__":
     main()
+
 
