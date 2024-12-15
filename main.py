@@ -17,50 +17,91 @@ def main():
         print("5 : Supprimer un article par ID")
         print("6 : Ajouter un produit")
         print("7 : Quitter le programme")
-        choice = input("\nEntrez le numéro de votre choix : ")
+        
+        try:
+            choice = input("\nEntrez le numéro de votre choix : ").strip()
+            
+            if choice == "1":
+                try:
+                    file_paths = input("Entrez les chemins des fichiers CSV à importer (séparés par des espaces) : ").strip().split()
+                    if not file_paths:
+                        raise ValueError("Aucun chemin fourni.")
+                    import_csv_files(file_paths, db_conn)
+                except Exception as e:
+                    print(f"Erreur lors de l'importation des fichiers : {e}")
+            
+            elif choice == "2":
+                try:
+                    search_criteria = input("Entrez vos critères de recherche (ex. name:Apple category:Fruit) : ").strip().split()
+                    if not search_criteria:
+                        raise ValueError("Aucun critère de recherche fourni.")
+                    search_products(db_conn, search_criteria)
+                except Exception as e:
+                    print(f"Erreur lors de la recherche : {e}")
+            
+            elif choice == "3":
+                try:
+                    generate_summary_report(db_conn, "summary_report.csv")
+                    print("Rapport récapitulatif généré : summary_report.csv")
+                except Exception as e:
+                    print(f"Erreur lors de la génération du rapport : {e}")
+            
+            elif choice == "4":
+                try:
+                    display_all_data(db_conn)
+                except Exception as e:
+                    print(f"Erreur lors de l'affichage des données : {e}")
+            
+            elif choice == "5":
+                try:
+                    item_id = input("Entrez l'ID de l'article à supprimer : ").strip()
+                    if not item_id.isdigit():
+                        raise ValueError("L'ID doit être un entier.")
+                    rows_deleted = delete_item_by_id(db_conn, int(item_id))
+                    if rows_deleted > 0:
+                        print(f"L'article avec l'ID {item_id} a été supprimé.")
+                    else:
+                        print(f"Aucun article trouvé avec l'ID {item_id}.")
+                except Exception as e:
+                    print(f"Erreur lors de la suppression de l'article : {e}")
+            
+            elif choice == "6":
+                try:
+                    name = input("Entrez le nom du produit : ").strip()
+                    if not name:
+                        raise ValueError("Le nom du produit ne peut pas être vide.")
+                    
+                    quantity = input("Entrez la quantité : ").strip()
+                    if not quantity.isdigit():
+                        raise ValueError("La quantité doit être un entier.")
+                    quantity = int(quantity)
 
-        if choice == "1":
-            file_paths = input("Entrez les chemins des fichiers CSV à importer (séparés par des espaces) : ").split()
-            if file_paths:
-                import_csv_files(file_paths, db_conn)
-        elif choice == "2":
-            search_criteria = input("Entrez vos critères de recherche (ex. name:Apple category:Fruit) : ").split()
-            if search_criteria:
-                search_products(db_conn, search_criteria)
-        elif choice == "3":
-            generate_summary_report(db_conn, "summary_report.csv")
-            print("Rapport récapitulatif généré : summary_report.csv")
-        elif choice == "4":
-            display_all_data(db_conn)
-        elif choice == "5":
-            try:
-                item_id = int(input("Entrez l'ID de l'article à supprimer : "))
-                rows_deleted = delete_item_by_id(db_conn, item_id)
-                if rows_deleted > 0:
-                    print(f"L'article avec l'ID {item_id} a été supprimé.")
-                else:
-                    print(f"Aucun article trouvé avec l'ID {item_id}.")
-            except ValueError:
-                print("Erreur : L'ID doit être un entier.")
-        elif choice == "6":
-            name = input("Entrez le nom du produit : ")
-            try:
-                quantity = int(input("Entrez la quantité : "))
-                price = float(input("Entrez le prix : "))
-                category = input("Entrez la catégorie : ")
-                add_product(db_conn, name, quantity, price, category)
-                print(f"Produit ajouté : {name}, quantité : {quantity}, prix : {price}, catégorie : {category}")
-            except ValueError:
-                print("Erreur : La quantité doit être un entier et le prix un nombre décimal.")
-        elif choice == "7":
-            print("Merci d'avoir utilisé le système de gestion d'inventaire. Au revoir !")
-            break
-        else:
-            print("Choix invalide. Veuillez entrer un numéro entre 1 et 7.")
-
+                    price = input("Entrez le prix : ").strip()
+                    try:
+                        price = float(price)
+                    except ValueError:
+                        raise ValueError("Le prix doit être un nombre décimal.")
+                    
+                    category = input("Entrez la catégorie : ").strip()
+                    if not category:
+                        raise ValueError("La catégorie ne peut pas être vide.")
+                    
+                    add_product(db_conn, name, quantity, price, category)
+                    print(f"Produit ajouté : {name}, quantité : {quantity}, prix : {price}, catégorie : {category}")
+                except Exception as e:
+                    print(f"Erreur lors de l'ajout du produit : {e}")
+            
+            elif choice == "7":
+                print("Merci d'avoir utilisé le système de gestion d'inventaire. Au revoir !")
+                break
+            
+            else:
+                print("Choix invalide. Veuillez entrer un numéro entre 1 et 7.")
+        
+        except Exception as e:
+            print(f"Une erreur inattendue est survenue : {e}")
+    
     db_conn.close()
 
 if __name__ == "__main__":
     main()
-
-
