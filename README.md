@@ -1,6 +1,6 @@
 https://youtu.be/gvb7ZT7dXh8
 
-Simplement télécharger le fichier zip directement du repo.
+Simplement télécharger et extraire le fichier zip directement du repo.
 
 -Ouvrir le dossier entier via un editeur de code.
 
