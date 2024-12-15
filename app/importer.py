@@ -1,5 +1,5 @@
 import csv
-import sqlite3
+
 
 def import_csv_files(file_paths, db_conn):
     cursor = db_conn.cursor()
@@ -10,6 +10,11 @@ def import_csv_files(file_paths, db_conn):
                 cursor.execute("""
                     INSERT INTO inventory (name, quantity, price, category)
                     VALUES (?, ?, ?, ?)
-                """, (row["name"], int(row["quantity"]), float(row["price"]), row["category"]))
+                """, (
+                    row["name"],
+                    int(row["quantity"]),
+                    float(row["price"]),
+                    row["category"])
+                    )
     db_conn.commit()
     print("Fichiers importés avec succès.")
