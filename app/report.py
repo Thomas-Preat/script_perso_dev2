@@ -19,4 +19,3 @@ def generate_summary_report(db_conn, output_file):
              "Total Value"]
             )
         writer.writerows(rows)
-    print("Rapport généré : summary_report.csv")
