@@ -2,13 +2,13 @@ ancienne video
 https://youtu.be/gvb7ZT7dXh8
 
 nouvelle video
-https://youtu.be/argG4dVdYn0
+
 
 Simplement télécharger et extraire le fichier zip directement du repo.
 
--Ouvrir le dossier entier via un editeur de code.
+-Ouvrir le dossier via le terminal.
 
--Aller sur main.py
+-faire "python main.py".
 
 -Lancer le programme et utiliser le terminal.
 
